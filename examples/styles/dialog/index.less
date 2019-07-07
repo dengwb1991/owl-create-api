@@ -1,0 +1,52 @@
+@import "../animation/index";
+@import "../common/border";
+@import "../common/mixin";
+
+.dialog {
+  font-family: PingFangSC-Regular;
+  position: fixed;
+  top: 0;
+  left: 0;
+  &-content {
+    font-size: 32px;
+    color: #323232;
+    line-height: 44px;
+    text-align: center;
+    padding: 50px 60px;
+  }
+  &-mask {
+    .popup-mask;
+  }
+  &-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 580px;
+    margin: 0 auto;
+    background: #FFF;
+    overflow: hidden;
+    color: #323232;
+    border-radius: 10px;
+    transform-origin: center;
+    vertical-align: middle;
+  }
+  &-btns {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    div {
+      position: relative;
+      width: 100%;
+      line-height: 88px;
+      height: 88px;
+      font-size: 36px;
+      text-align: center;
+      .border-left-1px();
+      &:first-child::before {
+        content: none;
+      }
+    }
+    .border-top-1px();
+  }
+}
