@@ -1,8 +1,5 @@
 const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const vueLoaderConfig = require('./vue-loader.config')
-
-const resolve = (dir) => path.join(__dirname, '..', dir)
 
 module.exports = {
   resolve: {
