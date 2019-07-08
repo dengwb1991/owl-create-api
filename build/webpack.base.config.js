@@ -1,4 +1,5 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const vueLoaderConfig = require('./vue-loader.config')
 
 module.exports = {
   resolve: {
@@ -13,8 +14,8 @@ module.exports = {
   module: {
     rules: [
       { test: /\.js$/, exclude: /node_modules/, use: ['babel-loader'] },
-      { test: /\.vue$/, use: ['vue-loader'] },
-      { test: /\.css$/, use: ['vue-style-loader', 'css-loader'] }
+      { test: /\.vue$/, loader: 'vue-loader' },
+      { test: /\.(css|less)$/, use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'] }
     ]
   }
 }

@@ -28,7 +28,6 @@
 import visibilityMixin from '../mixins/visibility'
 
 export default {
-  name: 'dialog',
   mixins: [visibilityMixin],
   props: {
     content: {
@@ -58,3 +57,7 @@ export default {
   }
 }
 </script>
+
+<style lang="less">
+@import "../styles/dialog/index.less";
+</style>
