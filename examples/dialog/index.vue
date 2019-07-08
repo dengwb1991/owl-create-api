@@ -28,6 +28,7 @@
 import visibilityMixin from '../mixins/visibility'
 
 export default {
+  name: 'myDialog',
   mixins: [visibilityMixin],
   props: {
     content: {
