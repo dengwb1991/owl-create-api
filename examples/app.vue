@@ -5,6 +5,8 @@
     <button class="btn" @click="show">dialog</button>
     <br/>
     <button class="btn" @click="showApi">api</button>
+    <br/>
+    <button class="btn" @click="showCreate">create</button>
     <Dialog :visible.sync="visible"
             :btns="btns">
       Dialog
@@ -33,6 +35,23 @@ export default {
     },
     showApi () {
       this.$myDialog({
+        $props: {
+          content: 'Content',
+          btns: [{
+            text: 'Yes',
+            callback: () => console.log('btn callback')
+          }, {
+            text: 'No',
+            callback: () => console.log('btn callback')
+          }]
+        },
+        $events: {
+          callback: e => console.log('visible callback', e)
+        }
+      }).show()
+    },
+    showCreate () {
+      Dialog.$create({
         $props: {
           content: 'Content',
           btns: [{
