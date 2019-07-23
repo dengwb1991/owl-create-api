@@ -34,7 +34,7 @@ export default {
       this.visible = true
     },
     showApi () {
-      this.$myDialog({
+      this.$dialog({
         $props: {
           content: 'Content',
           btns: [{

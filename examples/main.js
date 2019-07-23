@@ -6,7 +6,9 @@ import CreateAPI from 'create-api'
 // import CreateAPI from '../dist/owl-create-api.js'
 import Dialog from './dialog'
 
-Vue.use(CreateAPI)
+Vue.use(CreateAPI, {
+  componentPrefix: 'my-'
+})
 
 Vue.createAPI(Dialog)
 
