@@ -51,21 +51,25 @@ export default {
       }).show()
     },
     showCreate () {
-      Dialog.$create({
-        $props: {
-          content: 'Content',
-          btns: [{
-            text: 'Yes',
-            callback: () => console.log('btn callback')
-          }, {
-            text: 'No',
-            callback: () => console.log('btn callback')
-          }]
-        },
-        $events: {
-          callback: e => console.log('visible callback', e)
-        }
-      }).show()
+      let dialog = Dialog.$create({
+        content: 'I am from pure JS1'
+      })
+      dialog.show()
+      // Dialog.$create({
+      //   $props: {
+      //     content: 'Content',
+      //     btns: [{
+      //       text: 'Yes',
+      //       callback: () => console.log('btn callback')
+      //     }, {
+      //       text: 'No',
+      //       callback: () => console.log('btn callback')
+      //     }]
+      //   },
+      //   $events: {
+      //     callback: e => console.log('visible callback', e)
+      //   }
+      // }).show()
     }
   }
 }

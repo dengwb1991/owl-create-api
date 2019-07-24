@@ -4,10 +4,10 @@
          :style="{ zIndex }"
          v-show="isVisible">
       <div class="dialog-mask"
-           :style="{ ...maskStyle, zIndex: zIndex - 1}"
+           :style="dialogMask"
            @click="handleMask"></div>
       <div class="dialog-container"
-           :style="{ ...containerStyle, zIndex }">
+           :style="dialogContainer">
         <div class="dialog-content">
           <p v-if="content"
              v-html="content"></p>
@@ -46,6 +46,14 @@ export default {
     btns: {
       type: Array,
       default: () => []
+    }
+  },
+  computed: {
+    dialogContainer () {
+      return { ...this.containerStyle, zIndex: this.zIndex }
+    },
+    dialogMask () {
+      return { ...this.maskStyle, zIndex: +this.zIndex - 1 }
     }
   },
   methods: {
