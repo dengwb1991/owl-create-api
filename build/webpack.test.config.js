@@ -1,10 +1,11 @@
-var merge = require('webpack-merge')
-var baseConfig = require('./webpack.base.config.js')
+const path = require('path')
+const merge = require('webpack-merge')
+const baseConfig = require('./webpack.base.config.js')
 
-var webpackConfig = merge(baseConfig, {
+const webpackConfig = merge(baseConfig, {
   mode: 'development',
   // use inline sourcemap for karma-sourcemap-loader
-  devtool: '#inline-source-map'
+  devtool: 'inline-source-map'
 })
 
 module.exports = webpackConfig

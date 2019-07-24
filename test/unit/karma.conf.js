@@ -7,13 +7,7 @@ var webpackConfig = require('../../build/webpack.test.config')
 
 module.exports = function (config) {
   config.set({
-    browsers: ['Chrome'],
-    customLaunchers: {
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    },
+    browsers: ['PhantomJS'],
     frameworks: ['mocha', 'sinon-chai'],
     reporters: ['spec', 'coverage'],
     files: ['./index.js'],
