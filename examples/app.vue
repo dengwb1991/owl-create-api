@@ -26,7 +26,8 @@ export default {
       visible: false,
       btns: [{
         text: 'ok'
-      }]
+      }],
+      content: 'I am content'
     }
   },
   methods: {
@@ -36,19 +37,24 @@ export default {
     showApi () {
       this.$dialog({
         $props: {
-          content: 'Content',
+          content: 'content',
           btns: [{
-            text: 'Yes',
-            callback: () => console.log('btn callback')
+            text: 'Yes'
           }, {
-            text: 'No',
-            callback: () => console.log('btn callback')
+            text: 'Change',
+            callback: () => {
+              this.changeContent()
+              return false
+            }
           }]
         },
         $events: {
           callback: e => console.log('visible callback', e)
         }
       }).show()
+    },
+    changeContent () {
+      this.content = 'change content' 
     },
     showCreate () {
       let dialog = Dialog.$create({

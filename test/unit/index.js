@@ -1,8 +1,39 @@
 import Vue from 'vue'
 import CreateAPI from '../../src/index.js'
 import Dialog from '../../examples/dialog/index.vue'
+import { destroyVM, createVue } from './util'
 
 Vue.config.productionTip = false
+
+const dialog = {
+  template: `<div></div>`,
+  data () {
+    return {
+      content: 'I am content'
+    }
+  },
+  methods: {
+    showDialog () {
+      return this.$dialog({
+        $props: {
+          content: 'content'
+        }
+      }, h => {
+        return h('span', 'I am default slot')
+      }).show()
+    },
+    changeContent () {
+      this.content = 'I am from App and content changed!'
+    },
+    showAnotherDialog () {
+      return this.$dialog({
+        $props: {
+          content: 'I am another dialog'
+        }
+      }).show()
+    }
+  }
+}
 
 describe('create-api', () => {
   before(() => {
@@ -29,7 +60,7 @@ describe('create-api', () => {
       api = Vue.createAPI(Dialog, ['click'], true)
     })
     after(() => {
-      dialog.$parent.destroy()
+      destroyVM(dialog)
     })
 
     // 测试正确渲染内容
@@ -97,6 +128,49 @@ describe('create-api', () => {
       dialog.$nextTick(() => {
         const classList = Array.prototype.slice.apply(dialog.$el.classList)
         expect(classList).to.include('my-class')
+        done()
+      })
+    })
+  })
+
+  describe('create-api in Vue instance', () => {
+    let vm
+
+    before(() => {
+      Vue.createAPI(Dialog, true)
+
+      vm = createVue(dialog)
+    })
+    
+    after(() => {
+      destroyVM(vm)
+    })
+
+    it('expect to update when $props in ownInstance change', done => {
+      vm.showDialog()
+
+      vm.$nextTick(() => {
+        let text = document.querySelector('.dialog .dialog-content p ').textContent
+        expect(text).to.equal('I am content')
+        
+        vm.changeContent()
+
+        vm.$nextTick(() => {
+          text = document.querySelector('.dialog .dialog-content p ').textContent
+          expect(text).to.equal('I am from App and content changed!')
+          done()
+        })
+      })
+    })
+
+    it('expect to remove dom before destory', done => {
+      vm.showDialog()
+
+      vm.$nextTick(() => {
+        destroyVM(vm)
+
+        expect(document.querySelector('.dialog')).to.be.null
+
         done()
       })
     })
