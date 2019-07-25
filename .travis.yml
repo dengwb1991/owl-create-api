@@ -4,3 +4,7 @@ node_js:
   - v9
   - v10
   - v11
+script:
+- npm run cover
+after_success:
+- npm run coveralls
