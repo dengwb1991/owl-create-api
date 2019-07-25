@@ -17,6 +17,9 @@ const dialog = {
       return this.$dialog({
         $props: {
           content: 'content'
+        },
+        $events: {
+          test: 'content'
         }
       }, h => {
         return h('span', 'I am default slot')
@@ -43,10 +46,15 @@ describe('create-api', () => {
   })
 
   describe('Vue.use', () => {
+    let api
+
+    after(() => {
+      destroyVM(api)
+    })
     it('expect to add createDialog API', () => {
       expect(Vue.createAPI).to.be.a('function')
       
-      Vue.createAPI(Dialog, true)
+      api = Vue.createAPI(Dialog, true)
 
       expect(Vue.prototype.$dialog).to.be.a('function')
       expect(Dialog.$create).to.be.a('function')
@@ -61,6 +69,7 @@ describe('create-api', () => {
     })
     after(() => {
       destroyVM(dialog)
+      destroyVM(api)
     })
 
     // 测试正确渲染内容
@@ -135,28 +144,32 @@ describe('create-api', () => {
 
   describe('create-api in Vue instance', () => {
     let vm
-
+    let api
     before(() => {
-      Vue.createAPI(Dialog, true)
+      api = Vue.createAPI(Dialog, true)
 
       vm = createVue(dialog)
     })
     
     after(() => {
       destroyVM(vm)
+      destroyVM(api)
     })
 
     it('expect to update when $props in ownInstance change', done => {
       vm.showDialog()
 
       vm.$nextTick(() => {
-        let text = document.querySelector('.dialog .dialog-content p ').textContent
+        let text = document.querySelector('.dialog .dialog-content p').textContent
         expect(text).to.equal('I am content')
+        
+        let slotText = document.querySelector('.dialog .dialog-content span').textContent
+        expect(slotText).to.equal('I am default slot')
         
         vm.changeContent()
 
         vm.$nextTick(() => {
-          text = document.querySelector('.dialog .dialog-content p ').textContent
+          text = document.querySelector('.dialog .dialog-content p').textContent
           expect(text).to.equal('I am from App and content changed!')
           done()
         })
@@ -173,6 +186,55 @@ describe('create-api', () => {
 
         done()
       })
+    })
+  })
+
+  describe('single mode', () => {
+    let vm
+    let api
+    after(() => {
+      destroyVM(vm)
+      destroyVM(api)
+    })
+
+    // 测试单例模式 返回同一个实例
+    it('expect to return the same components in single mode', () => {
+      api = Vue.createAPI(Dialog, true)
+      vm = createVue(dialog)
+      const dialog1 = vm.showDialog()
+      const dialog2 = vm.showAnotherDialog()
+      expect(dialog1 === dialog2).to.be.true
+
+      destroyVM(dialog1)
+    })
+
+    // 测试非单例模式 返回多个实例
+    it('expect to return different components when not in single mode', done => {
+      api = Vue.createAPI(Dialog, false)
+      vm = createVue(dialog)
+      const dialog1 = vm.showDialog()
+      const dialog2 = vm.showAnotherDialog()
+      expect(dialog1 === dialog2).to.be.false
+
+      Vue.nextTick(() => {
+        const dialogs = document.querySelectorAll('.dialog')
+        const length = Array.prototype.slice.apply(dialogs).length
+        expect(length).to.equal(2)
+
+        done()
+      })
+    })
+  })
+
+  describe('create-api debug', () => {
+    
+    it('Component must have name while using create-api', () => {
+      delete Dialog.name
+      try {
+        Vue.createAPI(Dialog, true)
+      } catch (e) {
+        expect(e.message).to.equal('[create-api error]: Component must have name while using create-api!')
+      }
     })
   })
 })

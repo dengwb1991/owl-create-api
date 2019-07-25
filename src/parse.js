@@ -1,8 +1,8 @@
-import { camelize } from './util'
+import { camelize, isObject } from './util'
 
 export default function parseRenderData(data = {}, events = {}) {
   events = parseEvents(events)
-  const type = typeof data === 'object'
+  const type = isObject(data)
   const props = type ? { ...data } : { value: data }
   const on = {}
   for (const name in events) {

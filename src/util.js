@@ -10,10 +10,6 @@ export function camelize (str) {
   })
 }
 
-export function escapeReg (str, delimiter) {
-  return (str + '').replace(new RegExp('[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\' + (delimiter || '') + '-]', 'g'), '\\$&')
-}
-
 export function isBoolean (value) {
   return typeof value === 'boolean'
 }
