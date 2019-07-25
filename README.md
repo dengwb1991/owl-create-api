@@ -1,5 +1,7 @@
 # owl-create-api
 
+[![codecov](https://codecov.io/gh/dengwb1991/owl-create-api/branch/master/graph/badge.svg)](https://codecov.io/gh/dengwb1991/owl-create-api) [![build](https://travis-ci.org/dengwb1991/owl-create-api.svg?branch=master)](https://travis-ci.org/dengwb1991/owl-create-api)
+
 一个能够让 Vue 组件通过 API 方式调用的插件
 
 ## 安装
