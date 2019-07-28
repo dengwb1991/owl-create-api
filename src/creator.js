@@ -163,7 +163,7 @@ export default function apiCreator(Component, events = [], single = false, isDes
 
       component = createComponent(renderData, renderFn, options, _single)
 
-      if (isInVueInstance && isDestroy) {
+      if (isInVueInstance && !isDestroy) {
         ownerInstance.$on(eventBeforeDestroy, beforeDestroy)
       }
       function beforeDestroy() {

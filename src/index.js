@@ -6,7 +6,7 @@ import instantiateComponent from './instantiate'
 function install(Vue, options = {}) {
   const { componentPrefix = '', apiPrefix = '$' } = options
 
-  Vue.createAPI = function (Component, events = true, single, isDestroy = true) {
+  Vue.createAPI = function (Component, events = true, single, isDestroy = false) {
     if (isBoolean(events)) {
       single = events
       events = []
