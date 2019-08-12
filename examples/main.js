@@ -10,7 +10,9 @@ Vue.use(CreateAPI, {
   componentPrefix: 'my-'
 })
 
-Vue.createAPI(Dialog)
+Vue.createAPI(Dialog, ['callback'], true).before((renderData, renderFn, single) => {
+  // console.log(renderData, renderFn, single)
+})
 
 new Vue({
   el: '#app',

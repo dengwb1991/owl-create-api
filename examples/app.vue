@@ -1,12 +1,22 @@
 <template>
   <div>
     <h4>Click the button to pop up</h4>
+    
+    <p>引入 component 方式</p>
+    <button class="btn" @click="showComponent">dialog</button>
 
-    <button class="btn" @click="show">dialog</button>
-    <br/>
+    <p>api 调用 $props $events 更新数据</p>
     <button class="btn" @click="showApi">api</button>
-    <br/>
+    
+    <p>slot createElement</p>
+    <button class="btn" @click="showSlot">slot</button>
+    
+    <p>object params</p>
+    <button class="btn" @click="showObject">object</button>
+
+    <p>$create</p>
     <button class="btn" @click="showCreate">create</button>
+
     <Dialog :visible.sync="visible"
             :btns="btns">
       Dialog
@@ -31,11 +41,13 @@ export default {
     }
   },
   methods: {
-    show () {
+    // 引入 component 方式
+    showComponent () {
       this.visible = true
     },
+    // api 调用 $props $events 更新数据
     showApi () {
-      this.$dialog({
+      const dialog = this.$dialog({
         $props: {
           content: 'content',
           btns: [{
@@ -43,7 +55,42 @@ export default {
           }, {
             text: 'Change',
             callback: () => {
-              this.changeContent()
+              this.content = 'change content' 
+              return false
+            }
+          }],
+          $class: 'my-class'
+        },
+        $events: {
+          callback: e => console.log('visible callback', e)
+        }
+      })
+      dialog.show()
+    },
+    // slot createElement
+    showSlot () {
+      this.$dialog(null, (createElement) => {
+        return [
+          createElement('p', 'other content')
+        ]
+      }).show()
+    },
+    // object params
+    showObject () {
+      this.$dialog({
+        content: 'I am content',
+        onCallback: () => console.log('on-events callback')
+      }).show()
+    },
+    // $create
+    showCreate () {
+      Dialog.$create({
+        $props: {
+          content: 'content',
+          btns: [{
+            text: 'unChangeProps',
+            callback: () => {
+              // this.content = 'change content' 
               return false
             }
           }]
@@ -52,30 +99,6 @@ export default {
           callback: e => console.log('visible callback', e)
         }
       }).show()
-    },
-    changeContent () {
-      this.content = 'change content' 
-    },
-    showCreate () {
-      let dialog = Dialog.$create({
-        content: 'I am from pure JS1'
-      })
-      dialog.show()
-      // Dialog.$create({
-      //   $props: {
-      //     content: 'Content',
-      //     btns: [{
-      //       text: 'Yes',
-      //       callback: () => console.log('btn callback')
-      //     }, {
-      //       text: 'No',
-      //       callback: () => console.log('btn callback')
-      //     }]
-      //   },
-      //   $events: {
-      //     callback: e => console.log('visible callback', e)
-      //   }
-      // }).show()
     }
   }
 }
@@ -99,7 +122,7 @@ p {
   -webkit-tap-highlight-color: transparent;
   background-color: rgb(88, 70, 40);
   padding: 0;
-  margin-bottom: 10px;
+  margin-bottom: 60px;
 }
 
 </style>
