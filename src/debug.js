@@ -1,5 +1,3 @@
-export function assert(condition, msg) {
-  if (!condition) {
-    throw new Error(`[create-api error]: ${msg}`)
-  }
+export function assert(msg) {
+  throw new Error(`[create-api error]: ${msg}`)
 }

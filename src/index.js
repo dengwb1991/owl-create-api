@@ -1,5 +1,5 @@
 import { camelize, lowerCaseFirst, isBoolean } from './util'
-import { assert, warn } from './debug'
+import { assert } from './debug'
 import apiCreator from './creator'
 import instantiateComponent from './instantiate'
 
@@ -24,7 +24,7 @@ function install(Vue, options = {}) {
 function processComponentName (Component, options) {
   const { componentPrefix, apiPrefix } = options
   const name = Component.name
-  assert(name, 'Component must have name while using create-api!')
+  !name && assert('Component must have name while using create-api!')
   const pureName = lowerCaseFirst(name.replace(componentPrefix, ''))
   const camelizeName = `${camelize(`${apiPrefix}${pureName}`)}`
   return camelizeName
