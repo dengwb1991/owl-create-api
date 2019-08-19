@@ -1,6 +1,6 @@
 {
   "name": "owl-create-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A Vue plugin which make Vue component invocated by API.",
   "main": "./dist/owl-create-api.js",
   "scripts": {
