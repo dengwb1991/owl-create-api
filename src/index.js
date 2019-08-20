@@ -24,7 +24,9 @@ function install(Vue, options = {}) {
 function processComponentName (Component, options) {
   const { componentPrefix, apiPrefix } = options
   const name = Component.name
-  !name && assert('Component must have name while using create-api!')
+  if (!name) {
+    assert('Component must have name while using create-api!')
+  }
   const pureName = lowerCaseFirst(name.replace(componentPrefix, ''))
   const camelizeName = `${camelize(`${apiPrefix}${pureName}`)}`
   return camelizeName
